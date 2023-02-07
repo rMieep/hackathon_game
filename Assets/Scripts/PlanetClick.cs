@@ -25,5 +25,7 @@ public class PlanetClick : MonoBehaviour
         Debug.Log("Released!");
         playerMovementScript.planet = null;
         playerMovementScript.planetCollider2D = null;
+        playerMovementScript.rotationDirection = Vector3.zero;
     }
 }
+
