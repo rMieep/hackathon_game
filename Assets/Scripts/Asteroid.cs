@@ -12,7 +12,7 @@ public class Asteroid : MonoBehaviour
     public float minSize = 0.35f;
     public float maxSize = 1.65f;
     public float movementSpeed = 50f;
-    public float maxLifetime = 30f;
+    public float maxLifetime = 500f;
 
     private void Awake()
     {
@@ -30,19 +30,18 @@ public class Asteroid : MonoBehaviour
         // the physics is more realistic
         transform.localScale = Vector3.one * size;
         rigidbody.mass = size;
-
         // Destroy the asteroid after it reaches its max lifetime
-        Destroy(this.gameObject, maxLifetime);
     }
 
     public void SetTrajectory(Vector2 direction)
     {
         // The asteroid only needs a force to be added once since they have no
         // drag to make them stop moving
-       // rigidbody.AddForce(direction * movementSpeed);
+       // transform.Translate(Vector3.right * movementSpeed * Time.deltaTime);
+        //rigidbody.AddForce(UnityEngine.Random.Range(-100, 100), UnityEngine.Random.Range(-100, 100), ForceMode.Acceleration);
         rigidbody.velocity = rigidbody.GetRelativeVector(Vector3.left).normalized * movementSpeed;
         // Destroy the asteroid after it reaches its max lifetime
-        Destroy(this.gameObject, maxLifetime);
+        //Destroy(this.gameObject, maxLifetime);
     }
 
     //private void OnCollisionEnter2D(Collision2D collision)
