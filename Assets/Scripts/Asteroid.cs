@@ -32,7 +32,6 @@ public class Asteroid : MonoBehaviour
         rigidbody.mass = size;
 
         // Destroy the asteroid after it reaches its max lifetime
-        Destroy(this.gameObject, maxLifetime);
     }
 
     public void SetTrajectory(Vector2 direction)
@@ -42,7 +41,6 @@ public class Asteroid : MonoBehaviour
        // rigidbody.AddForce(direction * movementSpeed);
         rigidbody.velocity = rigidbody.GetRelativeVector(Vector3.left).normalized * movementSpeed;
         // Destroy the asteroid after it reaches its max lifetime
-        Destroy(this.gameObject, maxLifetime);
     }
 
     //private void OnCollisionEnter2D(Collision2D collision)
