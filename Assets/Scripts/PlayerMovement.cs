@@ -31,7 +31,11 @@ public class PlayerMovement : MonoBehaviour
             }
         } else
         {
-            transform.position += transform.right * speed * Time.deltaTime;
+            Debug.Log("Previous Pos: " + previousPosition);
+            Debug.Log("Current Pos: " + transform.position);
+            Vector3 direction = -(previousPosition - transform.position);
+            direction.Normalize();
+            transform.Translate(direction * speed * Time.deltaTime);
         }
 
         previousPosition = current;
