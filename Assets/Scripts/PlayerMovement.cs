@@ -8,6 +8,7 @@ public class PlayerMovement : MonoBehaviour
     public CircleCollider2D planetCollider2D;
     public float speed;
     private Vector3 previousPosition;
+    public Vector3 pos, velocity, rotationDirection;
 
     void Start()
     {
@@ -16,6 +17,8 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        velocity = (transform.position - pos) / Time.deltaTime;
+        pos = transform.position;
         Vector3 current = transform.position;
         if (planet != null)
         {
@@ -32,11 +35,8 @@ public class PlayerMovement : MonoBehaviour
             }
         } else
         {
-            Debug.Log("Previous Pos: " + previousPosition);
-            Debug.Log("Current Pos: " + transform.position);
-            Vector3 direction = -(previousPosition - transform.position);
-            direction.Normalize();
-            transform.Translate(direction * speed * Time.deltaTime);
+            transform.position += transform.right * speed * Time.deltaTime;
+            this.rotationDirection = Vector3.zero;
         }
 
         previousPosition = current;
@@ -77,22 +77,35 @@ public class PlayerMovement : MonoBehaviour
         transform.position = Vector3.MoveTowards(transform.position, new_position, speed * Time.deltaTime);
     }
 
+    Vector3 calculateRotationDirection(PlayerMovement orbiter, Transform center)
+    {
+        Vector3 toCenter = center.position - orbiter.pos;
+        float dir = Mathf.Sign(orbiter.velocity.x * toCenter.y - orbiter.velocity.y * toCenter.x);
+        if (dir < 0)
+        {
+            return Vector3.back;
+        }
+        return Vector3.forward;
+        
+    }
+
     private void OrbitPlanet()
     {
-        Vector3 targetDir = planet.transform.position - transform.position;
-        Debug.Log(Vector3.SignedAngle(targetDir, transform.right, Vector3.right));
-        Debug.Log("Orbiting");
+        // Do not want to keep setting rotation direction while orbitting
+        if (this.rotationDirection == Vector3.zero)
+        {
+            rotationDirection = calculateRotationDirection(this, planet.transform);
+        }
+
         Vector3 diff = planet.transform.position - transform.position;
         float rot_z = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
 
         // Make "side of the ship" face the planet
-        var targetRotation = Quaternion.Euler(0f, 0f, rot_z - 90);
+        var targetRotation = Quaternion.Euler(0f, 0f, rot_z - (90 * rotationDirection.z));
         var step = speed * 50 * Time.deltaTime;
         transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, step);
 
         // Makes ship orbit around the planet
-        transform.RotateAround(planet.transform.position, Vector3.forward, (speed * 20 * Time.deltaTime));
+        transform.RotateAround(planet.transform.position, rotationDirection, (speed * 20 * Time.deltaTime));
     }
- 
-
 }
