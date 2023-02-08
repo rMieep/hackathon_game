@@ -4,7 +4,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class Asteroid : MonoBehaviour
 {
-    public new Rigidbody2D rigidbody { get; private set; }
+    public Rigidbody2D rigidbody { get; private set; }
     public SpriteRenderer spriteRenderer { get; private set; }
     public Sprite[] sprites;
 
@@ -34,7 +34,7 @@ public class Asteroid : MonoBehaviour
         // Destroy the asteroid after it reaches its max lifetime
     }
 
-    public void SetTrajectory(Vector2 direction)
+    public void SetTrajectory()
     {
         // The asteroid only needs a force to be added once since they have no
         // drag to make them stop moving
