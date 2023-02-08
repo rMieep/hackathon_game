@@ -3,11 +3,11 @@ using UnityEngine;
 public class AsteroidSpawner : MonoBehaviour
 {
     public Asteroid asteroidPrefab;
-    public float spawnDistance = 15f;
+    public float spawnDistance = 8f;
     public float spawnRate = 1f;
     public int amountPerSpawn = 1;
     //[Range(0f, 45f)]
-    public float trajectoryVariance = 15f;
+    public float trajectoryVariance = 5f;
 
     private void Start()
     {
@@ -36,6 +36,7 @@ public class AsteroidSpawner : MonoBehaviour
         // size within the range
         Asteroid asteroid = Instantiate(asteroidPrefab, spawnPoint, Quaternion.identity);
         asteroid.size = Random.Range(asteroid.minSize, asteroid.maxSize);
+        Debug.Log("ASIZE: " + asteroid.size);
         Vector2 trajectory = rotation * -spawnDirection;
         asteroid.SetTrajectory(trajectory);
 

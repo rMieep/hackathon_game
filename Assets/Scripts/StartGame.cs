@@ -9,8 +9,9 @@ public class StartGame : MonoBehaviour
     
     public void PlayGame()
     {
-        Debug.Log("Current Scene index  " + SceneManager.GetActiveScene().buildIndex);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        //Debug.Log("Current Scene index  " + SceneManager.GetActiveScene().buildIndex);
+        //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        SceneManager.LoadScene("SampleScene");
 
     }
 }
