@@ -9,7 +9,15 @@ public class PlayerMovement : MonoBehaviour
     public float speed;
     private Vector3 previousPosition;
     public Vector3 pos, velocity, rotationDirection;
+    public float distanceToOrbitAroundPlanet = 0.5f;
+    private float asteroidSize;
+    private bool stayInOrbit = false;
 
+
+    public void setStayInOrbit(bool stayInOrbit)
+    {
+        this.stayInOrbit = stayInOrbit;
+    }
     void Start()
     {
         previousPosition = transform.position;
@@ -23,18 +31,26 @@ public class PlayerMovement : MonoBehaviour
         if (planet != null)
         {
             float dist = Vector3.Distance(planet.transform.position, transform.position);
-            Debug.Log("Dist: " + dist);
 
-            if (dist > 2.1f)
+            if(dist <= 4f)
             {
+                stayInOrbit = true;
+            }
+            Debug.Log("Stay in orbit: " + stayInOrbit);
+            if (!stayInOrbit)
+            {
+                Debug.Log("Distance To Fly To: " + dist);
                 FlyToPlanet();
             }
-            else
+            if(stayInOrbit)
             {
+                //Debug.Log("threshold: " + 0.45f);
+                //Debug.Log("Distance To Orbit: " + dist);
                 OrbitPlanet();
             }
         } else
         {
+            stayInOrbit = false;
             transform.position += transform.right * speed * Time.deltaTime;
             this.rotationDirection = Vector3.zero;
         }
@@ -52,6 +68,13 @@ public class PlayerMovement : MonoBehaviour
         position += center;
 
         return position;
+    }
+
+    public void SetAsteroidSize(float asteroidSize)
+    {
+
+        Debug.Log("Asteroid Size: " + asteroidSize);
+        this.asteroidSize = asteroidSize;
     }
 
     private void FlyToPlanet()
@@ -102,7 +125,7 @@ public class PlayerMovement : MonoBehaviour
 
         // Make "side of the ship" face the planet
         var targetRotation = Quaternion.Euler(0f, 0f, rot_z - (90 * rotationDirection.z));
-        var step = speed * 50 * Time.deltaTime;
+        var step = 2 * speed * 50 * Time.deltaTime;
         transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, step);
 
         // Makes ship orbit around the planet

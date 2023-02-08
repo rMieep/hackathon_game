@@ -8,11 +8,11 @@ public class Asteroid : MonoBehaviour
     public SpriteRenderer spriteRenderer { get; private set; }
     public Sprite[] sprites;
 
-    public float size = 10f;
-    public float minSize = 100f;
-    public float maxSize = 150f;
-    public float movementSpeed = 1f;
-    public float maxLifetime = 30f;
+    public float size;
+    public float minSize;
+    public float maxSize ;
+    public float movementSpeed;
+    public float maxLifetime;
 
     private void Awake()
     {

@@ -11,7 +11,7 @@ public class AsteroidSpawner : MonoBehaviour
 
     private void Start()
     {
-        InvokeRepeating("Spawn", spawnRate, 2.5f);
+        InvokeRepeating("Spawn", spawnRate, 4f);
     }
 
     public void Spawn()
@@ -28,7 +28,8 @@ public class AsteroidSpawner : MonoBehaviour
         // Create the new asteroid by cloning the prefab and set a random
         // size within the range
         Asteroid asteroid = Instantiate(asteroidPrefab, randomSpawnPosition, Quaternion.identity);
-        asteroid.size = Random.Range(asteroid.minSize, asteroid.maxSize);
+        //asteroid.size = Random.Range(asteroid.minSize, asteroid.maxSize);
+        asteroid.size = 3;
         //Vector2 trajectory = rotation * -spawnDirection;
         asteroid.SetTrajectory();
 

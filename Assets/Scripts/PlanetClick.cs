@@ -26,11 +26,13 @@ public class PlanetClick : MonoBehaviour
         }
         playerMovementScript.planet = this;
         playerMovementScript.planetCollider2D = this.circleCollider2D;
+        playerMovementScript.SetAsteroidSize(gameObject.GetComponent<Asteroid>().size);
     }
 
     void OnMouseUp()
     {
         Debug.Log("Released!");
+        playerMovementScript.setStayInOrbit(false);
         if (playerMovementScript is null)
         {
             return;
